@@ -140,4 +140,4 @@ alias gps='git pull'
 alias gfe='git fetch'
 alias gfa='git fetch --all'
 
-
+setxkbmap -option ctrl:swapcaps,caps:ctrl_modifier,terminate:ctrl_alt_bksp
