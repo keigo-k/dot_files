@@ -1,5 +1,4 @@
 colorscheme koehler
-
 if has('vim_starting')
   set nocompatible
 
@@ -16,15 +15,26 @@ NeoBundle 'tpope/vim-surround'
 NeoBundle 'tomtom/tcomment_vim'
 NeoBundle 'scrooloose/nerdtree'
 NeoBundle 'tpope/vim-fugitive'
-
+"
 NeoBundle 'nathanaelkane/vim-indent-guides'
 NeoBundle 'vim-scripts/AnsiEsc.vim'
 NeoBundle 'kana/vim-submode'
-NeoBundle 'Shougo/vimproc'
-NeoBundle 'Shougo/neocomplcache'
-NeoBundle 'Shougo/neocomplcache'
-NeoBundle 'scrooloose/syntastic'
+NeoBundle 'Shougo/vimproc', {
+  \ 'build' : {
+  \     'windows' : 'make -f make_mingw32.mak',
+  \     'cygwin' : 'make -f make_cygwin.mak',
+  \     'mac' : 'make -f make_mac.mak',
+  \     'unix' : 'make -f make_unix.mak',
+  \    },
+  \ }
 
+if has('lua')
+      NeoBundleLazy 'Shougo/neocomplete.vim', {
+          \ 'depends' : 'Shougo/vimproc',
+          \ 'autoload' : { 'insert' : 1,}
+          \ }
+endif
+NeoBundle 'scrooloose/syntastic'
 call neobundle#end()
 
 filetype plugin indent on
@@ -33,38 +43,18 @@ NeoBundleCheck
 autocmd QuickFixCmdPost *grep* cwindow
 autocmd FileType * setlocal formatoptions-=ro
 
-" Disable AutoComplPop.
-let g:acp_enableAtStartup = 0
-" Use neocomplcache.
-let g:neocomplcache_enable_at_startup = 1
-" Use smartcase.
-let g:neocomplcache_enable_smart_case = 1
-" Set minimum syntax keyword length.
-let g:neocomplcache_min_syntax_length = 3
-let g:neocomplcache_lock_buffer_name_pattern = '\*ku\*'
-
-" Define dictionary.
-let g:neocomplcache_dictionary_filetype_lists = {
-    \ 'default' : ''
-    \ }
-
-" Plugin key-mappings.
-inoremap <expr><C-g>     neocomplcache#undo_completion()
-inoremap <expr><C-l>     neocomplcache#complete_common_string()
-
-" Recommended key-mappings.
-" <CR>: close popup and save indent.
-inoremap <silent> <CR> <C-r>=<SID>my_cr_function()<CR>
-function! s:my_cr_function()
-  return neocomplcache#smart_close_popup() . "\<CR>"
-endfunction
-" <TAB>: completion.
-inoremap <expr><TAB>  pumvisible() ? "\<C-n>" : "\<TAB>"
-" <C-h>, <BS>: close popup and delete backword char.
-inoremap <expr><C-h> neocomplcache#smart_close_popup()."\<C-h>"
-inoremap <expr><BS> neocomplcache#smart_close_popup()."\<C-h>"
-inoremap <expr><C-y>  neocomplcache#close_popup()
-inoremap <expr><C-e>  neocomplcache#cancel_popup()
+" neocomplete {{{
+let g:neocomplete#enable_at_startup               = 1
+let g:neocomplete#auto_completion_start_length    = 3
+let g:neocomplete#enable_ignore_case              = 1
+let g:neocomplete#enable_smart_case               = 1
+let g:neocomplete#enable_camel_case               = 1
+let g:neocomplete#use_vimproc                     = 1
+let g:neocomplete#sources#buffer#cache_limit_size = 1000000
+let g:neocomplete#sources#tags#cache_limit_size   = 30000000
+let g:neocomplete#enable_fuzzy_completion         = 1
+let g:neocomplete#lock_buffer_name_pattern        = '\*ku\*'
+" }}}
 
 
 let g:indent_guides_enable_on_vim_startup = 1
@@ -89,32 +79,15 @@ set autoindent
 set expandtab
 set shiftwidth=4
 
-nnoremap s <Nop>
-nnoremap sj <C-w>j
-nnoremap sk <C-w>k
-nnoremap sl <C-w>l
-nnoremap sh <C-w>h
-nnoremap sJ <C-w>J
-nnoremap sK <C-w>K
-nnoremap sL <C-w>L
-nnoremap sH <C-w>H
-nnoremap sn gt
+noremap s <Nop>
+noremap sn gt
 nnoremap sp gT
-nnoremap sr <C-w>r
-nnoremap s= <C-w>=
 nnoremap sw <C-w>w
 nnoremap so <C-w>_<C-w>|
 nnoremap sO <C-w>=
-nnoremap sN :<C-u>bn<CR>
-nnoremap sP :<C-u>bp<CR>
 nnoremap st :<C-u>tabnew<CR>
-nnoremap sT :<C-u>Unite tab<CR>
 nnoremap ss :<C-u>sp<CR>
 nnoremap sv :<C-u>vs<CR>
-nnoremap sq :<C-u>q<CR>
-nnoremap sQ :<C-u>bd<CR>
-nnoremap sb :<C-u>Unite buffer_tab -buffer-name=file<CR>
-nnoremap sB :<C-u>Unite buffer -buffer-name=file<CR>
 
 call submode#enter_with('bufmove', 'n', '', 's>', '<C-w>>')
 call submode#enter_with('bufmove', 'n', '', 's<', '<C-w><')
@@ -124,5 +97,4 @@ call submode#map('bufmove', 'n', '', '>', '<C-w>>')
 call submode#map('bufmove', 'n', '', '<', '<C-w><')
 call submode#map('bufmove', 'n', '', '+', '<C-w>+')
 call submode#map('bufmove', 'n', '', '-', '<C-w>-')
-
 
