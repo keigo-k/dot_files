@@ -13,6 +13,7 @@ anyenv install phpenv
 anyenv install ndenv
 
 source ~/.zshrc
-pyenv install 2.7.9
-
+pyenv install 3.6.2
+pyenv global 3.6.2
+pyenv virtualenv 3.6.2 py36
 
