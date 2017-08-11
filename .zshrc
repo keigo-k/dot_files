@@ -44,13 +44,17 @@ ZSH_THEME="rkj-repos"
 # Custom plugins may be added to ~/.oh-my-zsh/custom/plugins/
 # Example format: plugins=(rails git textmate ruby lighthouse)
 # Add wisely, as too many plugins slow down shell startup.
-plugins=(git bundler ruby c c++)
+plugins=(git bundler c c++ scala java python)
 
-# User configuration
+#User configuration
 
-export PATH="/usr/local/cuda-7.0/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games"
-# export MANPATH="/usr/local/man:$MANPATH"
-export LD_LIBRARY_PATH=/usr/local/cuda-7.0/lib:$LD_LIBRARY_PATH
+export M2_HOME="/usr/local/maven"
+export JAVA_HOME=/usr/lib/jvm/java-8-oracle
+export SCALA_HOME=/usr/local/src/scala
+
+export PATH="/home/keigokubo/tools/pylearn2/pylearn2/scripts:$SCALA_HOME/bin:${M2_HOME}/bin:/usr/local/cuda/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games"
+export PATH="$HOME/.anyenv/bin:$HOME/bin:$PATH"
+eval "$(anyenv init -)"
 
 source $ZSH/oh-my-zsh.sh
 
@@ -141,4 +145,17 @@ alias gps='git pull'
 alias gfe='git fetch'
 alias gfa='git fetch --all'
 
-setxkbmap -option ctrl:swapcaps,caps:ctrl_modifier,terminate:ctrl_alt_bksp
+export CATALINA_HOME=/usr/local/tomcat
+export CUDA_ROOT=/usr/local/cuda/bin
+export LD_LIBRARY_PATH=/usr/local/cuda/lib64:$LD_LIBRARY_PATH
+export LD_LIBRARY_PATH=/usr/local/lib/:$LD_LIBRARY_PATH
+export LD_LIBRARY_PATH=/opt/leveldb:$LD_LIBRARY_PATH
+export LD_LIBRARY_PATH=/usr/local/hdf5/lib:$LD_LIBRARY_PATH
+
+alias py36="source ~/.virtualenvs/py36/bin/activate"
+
+CPATH=/usr/local/cuda/include
+C_INCLUDE_PATH=/usr/local/cuda/include
+CPLUS_INCLUDE_PATH=/usr/local/cuda/include
+
+ssh-add >& /dev/null
