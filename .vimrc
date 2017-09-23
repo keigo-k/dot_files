@@ -1,7 +1,5 @@
-colorscheme koehler
 if has('vim_starting')
   set nocompatible
-
   set runtimepath+=~/.vim/bundle/neobundle.vim/
 endif
 
@@ -17,10 +15,14 @@ NeoBundle 'tomtom/tcomment_vim'
 NeoBundle 'scrooloose/nerdtree'
 NeoBundle 'tpope/vim-fugitive'
 NeoBundle 'vim-scripts/gtags.vim'
+NeoBundle 'altercation/vim-colors-solarized'
+NeoBundle 'w0ng/vim-hybrid'
+NeoBundle 'chriskempson/vim-tomorrow-theme'
+NeoBundle 'tomasr/molokai'
 
-
-
+NeoBundle 'bronson/vim-trailing-whitespace'
 NeoBundle 'nathanaelkane/vim-indent-guides'
+
 NeoBundle 'vim-scripts/AnsiEsc.vim'
 NeoBundle 'kana/vim-submode'
 NeoBundle 'Shougo/vimproc', {
@@ -32,34 +34,42 @@ NeoBundle 'Shougo/vimproc', {
   \    },
   \ }
 
+
+NeoBundle 'scrooloose/nerdtree'
 NeoBundle 'Shougo/neosnippet'
 NeoBundle 'Shougo/neosnippet-snippets'
 NeoBundle 'justmao945/vim-clang'
 NeoBundle 'Shougo/neoinclude.vim'
 
 if has('lua')
-      NeoBundleLazy 'Shougo/neocomplete.vim', {
-          \ 'depends' : 'Shougo/vimproc',
-          \ 'autoload' : { 'insert' : 1,}
-          \ }
+    NeoBundleLazy 'Shougo/neocomplete.vim', {
+        \ 'depends' : 'Shougo/vimproc',
+        \ 'autoload' : { 'insert' : 1,}
+        \ }
 endif
 NeoBundle 'scrooloose/syntastic'
 
-                
 call neobundle#end()
-
 
 
 filetype plugin indent on
 NeoBundleCheck
 
+"syntax on
+"set background=dark
+"colorscheme solarized
+"set background=dark
+"colorscheme Tomorrow-Night
+colorscheme molokai
+"colorscheme koehler
+set t_Co=256
+
 autocmd QuickFixCmdPost *grep* cwindow
-autocmd FileType * setlocal formatoptions-=ro
 
 " neocomplete {{{
 let g:neocomplete#enable_at_startup               = 1
 if !exists('g:neocomplete#force_omni_input_patterns')
-        let g:neocomplete#force_omni_input_patterns = {}
+    let g:neocomplete#force_omni_input_patterns = {}
 endif
 let g:neocomplete#force_overwrite_completefunc = 1
 let g:neocomplete#force_omni_input_patterns.c = '[^.[:digit:] *\t]\%(\.\|->\)'
@@ -77,36 +87,16 @@ let g:neocomplete#lock_buffer_name_pattern        = '\*ku\*'
 
 
 let g:indent_guides_enable_on_vim_startup = 1
-let g:unite_enable_start_insert=1
-noremap <C-P> :Unite buffer<CR>
-noremap <C-N> :Unite -buffer-name=file file<CR>
-noremap <C-Z> :Unite file_mru<CR>
-noremap :uff :<C-u>UniteWithBufferDir file -buffer-name=file<CR>
-au FileType unite nnoremap <silent> <buffer> <expr> <C-J> unite#do_action('split')
-au FileType unite inoremap <silent> <buffer> <expr> <C-J> unite#do_action('split')
-au FileType unite nnoremap <silent> <buffer> <expr> <C-K> unite#do_action('vsplit')
-au FileType unite inoremap <silent> <buffer> <expr> <C-K> unite#do_action('vsplit')
-au FileType unite nnoremap <silent> <buffer> <ESC><ESC> :q<CR>
-au FileType unite inoremap <silent> <buffer> <ESC><ESC> <ESC>:q<CR>
+let g:indent_guides_auto_colors = 0
+autocmd VimEnter,Colorscheme * :hi IndentGuidesOdd ctermbg=0
+autocmd VimEnter,Colorscheme * :hi IndentGuidesEven ctermbg=darkgrey
 
-noremap <C-T> :NERDTree<CR>
-noremap tp :set paste<CR>:set noautoindent<CR>
-noremap tn :set nopaste<CR>:set autoindent<CR>
+let g:unite_enable_start_insert=1
 
 set tabstop=4
 set autoindent
 set expandtab
 set shiftwidth=4
-
-noremap s <Nop>
-noremap sn gt
-noremap sp gT
-noremap sw <C-w>w
-noremap so <C-w>_<C-w>|
-noremap sO <C-w>=
-noremap st :<C-u>tabnew<CR>
-noremap ss :<C-u>sp<CR>
-noremap sv :<C-u>vs<CR>
 
 call submode#enter_with('bufmove', 'n', '', 's>', '<C-w>>')
 call submode#enter_with('bufmove', 'n', '', 's<', '<C-w><')
@@ -117,16 +107,24 @@ call submode#map('bufmove', 'n', '', '<', '<C-w><')
 call submode#map('bufmove', 'n', '', '+', '<C-w>+')
 call submode#map('bufmove', 'n', '', '-', '<C-w>-')
 
+autocmd FileType * setlocal formatoptions-=ro
 autocmd FileType python setlocal completeopt-=preview
-
+autocmd FileType cpp setlocal tabstop=2 shiftwidth=2 softtabstop=2
+autocmd FileType hpp setlocal tabstop=2 shiftwidth=2 softtabstop=2
+autocmd FileType c setlocal tabstop=2 shiftwidth=2 softtabstop=2
+autocmd FileType h setlocal tabstop=2 shiftwidth=2 softtabstop=2
 
 " 'justmao945/vim-clang' {{{
 
-" disable auto completion for vim-clanG
+" disable auto completion for vim-clang
 let g:clang_auto = 0
-let g:clang_complete_auto = 0
+let g:clang_complete_auto = 1
 let g:clang_auto_select = 0
 let g:clang_use_library = 1
+let g:clang_format_auto = 1
+let g:clang_format_style = 'Google'
+let g:clang_check_syntax_auto = 1
+let g:clang_compilation_database = './build'
 
 " default 'longest' can not work with neocomplete
 let g:clang_c_completeopt   = 'menuone'
@@ -170,9 +168,63 @@ autocmd BufWrite *.{hpp} :CPPCodeCleanup
 autocmd BufWrite *.{c} :CPPCodeCleanup
 autocmd BufWrite *.{h} :CPPCodeCleanup
 
-map <C-g> :Gtags 
-map <C-h> :Gtags -f %<CR>
-map <C-j> :GtagsCursor<CR>
-map <C-n> :cn<CR>
-map <C-p> :cp<CR>
+au VimEnter * silent execute "!gconftool-2 --type string --set /apps/gnome-terminal/profiles/Default/cursor_shape block"
+au InsertEnter * silent execute "!gconftool-2 --type string --set /apps/gnome-terminal/profiles/Default/cursor_shape ibeam"
+au InsertLeave * silent execute "!gconftool-2 --type string --set /apps/gnome-terminal/profiles/Default/cursor_shape block"
+
+noremap <C-g><C-g> :Gtags
+noremap <C-g><C-h> :Gtags -f %<CR>
+noremap <C-g><C-j> :GtagsCursor<CR>
+noremap <C-g><C-n> :cn<CR>
+noremap <C-g><C-p> :cp<CR>
+
+inoremap <C-j> <Down>
+inoremap <C-k> <Up>
+inoremap <C-h> <Left>
+inoremap <C-l> <Right>
+inoremap <C-o> <ESC>o
+inoremap <C-b> <BS>
+inoremap <C-d> <Del>
+inoremap <C-e> <end>
+inoremap <C-a> <home>
+inoremap <C-w> <C-o>w
+
+cnoremap <C-j> <Down>
+cnoremap <C-k> <Up>
+cnoremap <C-h> <Left>
+cnoremap <C-l> <Right>
+cnoremap <C-o> <ESC>o
+cnoremap <C-b> <BS>
+cnoremap <C-d> <Del>
+cnoremap <C-e> <end>
+cnoremap <C-a> <home>
+cnoremap <C-w> <C-o>w
+
+noremap st :NERDTree<CR>
+noremap sf :Unite -buffer-name=file file<CR>
+noremap sr :Unite file_mru<CR>
+au FileType unite nnoremap <silent> <buffer> <expr> <C-J> unite#do_action('split')
+au FileType unite inoremap <silent> <buffer> <expr> <C-J> unite#do_action('split')
+au FileType unite nnoremap <silent> <buffer> <expr> <C-K> unite#do_action('vsplit')
+au FileType unite inoremap <silent> <buffer> <expr> <C-K> unite#do_action('vsplit')
+au FileType unite nnoremap <silent> <buffer> <C-b> :q<CR>
+au FileType unite inoremap <silent> <buffer> <C-b> <ESC>:q<CR>
+
+noremap tp :set paste<CR>:set noautoindent<CR>
+noremap tn :set nopaste<CR>:set autoindent<CR>
+noremap s <Nop>
+noremap ss :<C-u>sp<CR>
+noremap sv :<C-u>vs<CR>
+noremap <C-h> <C-w>w
+nnoremap sj <C-w>j
+nnoremap sk <C-w>k
+nnoremap sl <C-w>l
+nnoremap sh <C-w>h
+nnoremap sJ <C-w>J
+nnoremap sK <C-w>K
+nnoremap sL <C-w>L
+nnoremap sH <C-w>H
+noremap sT :<C-u>tabnew<CR>
+noremap sn gt
+noremap sp gT
 

@@ -159,3 +159,9 @@ C_INCLUDE_PATH=/usr/local/cuda/include
 CPLUS_INCLUDE_PATH=/usr/local/cuda/include
 
 ssh-add >& /dev/null
+
+
+LANG=C
+/usr/bin/setxkbmap -option ctrl:swapcaps,caps:ctrl_modifier,terminate:ctrl_alt_bksp
+
+
