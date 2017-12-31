@@ -55,12 +55,12 @@ call neobundle#end()
 filetype plugin indent on
 NeoBundleCheck
 
-"syntax on
-"set background=dark
-"colorscheme solarized
+syntax on
+set background=dark
+colorscheme solarized
 "set background=dark
 "colorscheme Tomorrow-Night
-colorscheme molokai
+"colorscheme molokai
 "colorscheme koehler
 set t_Co=256
 
