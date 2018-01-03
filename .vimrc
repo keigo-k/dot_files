@@ -56,13 +56,13 @@ filetype plugin indent on
 NeoBundleCheck
 
 syntax on
+set t_Co=256
+let g:solarized_termcolors=256
 set background=dark
 colorscheme solarized
-"set background=dark
 "colorscheme Tomorrow-Night
 "colorscheme molokai
 "colorscheme koehler
-set t_Co=256
 
 autocmd QuickFixCmdPost *grep* cwindow
 

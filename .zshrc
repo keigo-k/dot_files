@@ -52,7 +52,7 @@ export M2_HOME="/usr/local/maven"
 export JAVA_HOME=/usr/lib/jvm/java-8-oracle
 export SCALA_HOME=/usr/local/src/scala
 
-export PATH="/home/keigokubo/tools/pylearn2/pylearn2/scripts:$SCALA_HOME/bin:${M2_HOME}/bin:/usr/local/cuda/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games"
+export PATH="$SCALA_HOME/bin:${M2_HOME}/bin:/usr/local/cuda/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games"
 export PATH="$HOME/.anyenv/bin:$HOME/bin:$PATH"
 eval "$(anyenv init -)"
 eval "$(pyenv virtualenv-init -)"
@@ -165,4 +165,6 @@ ssh-add >& /dev/null
 LANG=C
 #/usr/bin/setxkbmap -option ctrl:swapcaps,caps:ctrl_modifier,terminate:ctrl_alt_bksp
 
-
+if [ -e /etc/os-release -a -x /usr/bin/dircolors ]; then
+    test -r ~/.dircolors && eval "$(dircolors -b ~/.dircolors)" || eval "$(dircolors -b)"
+fi
