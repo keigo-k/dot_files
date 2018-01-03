@@ -147,7 +147,7 @@ elseif executable('clang-format-3.5')
 elseif executable('clang-format-3.4')
     let g:clang_format_exec = 'clang-format-3.4'
 else
-    let g:clang_exec = 'clang-format'
+    let g:clang_format_exec = 'clang-format'
 endif
 
 let g:clang_c_options = '-std=c11'
@@ -156,10 +156,8 @@ let g:clang_cpp_options = '-std=c++11 -stdlib=libc++'
 " }}}
 
 function! CPPCodeCleanup()
-  " echo "Cleanup cpp code"
   let l:lines="all"
-  let g:clang_format_fallback_style = 'Google'
-  :pyf /usr/share/vim/addons/syntax/clang-format-3.6.py
+  :pyf ~/.clang-format.py
 endfunction
 command! CPPCodeCleanup call CPPCodeCleanup()
 

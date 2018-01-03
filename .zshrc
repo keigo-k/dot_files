@@ -55,6 +55,7 @@ export SCALA_HOME=/usr/local/src/scala
 export PATH="/home/keigokubo/tools/pylearn2/pylearn2/scripts:$SCALA_HOME/bin:${M2_HOME}/bin:/usr/local/cuda/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games"
 export PATH="$HOME/.anyenv/bin:$HOME/bin:$PATH"
 eval "$(anyenv init -)"
+eval "$(pyenv virtualenv-init -)"
 
 source $ZSH/oh-my-zsh.sh
 
