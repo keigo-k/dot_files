@@ -153,7 +153,7 @@ export LD_LIBRARY_PATH=/usr/local/lib/:$LD_LIBRARY_PATH
 export LD_LIBRARY_PATH=/opt/leveldb:$LD_LIBRARY_PATH
 export LD_LIBRARY_PATH=/usr/local/hdf5/lib:$LD_LIBRARY_PATH
 
-alias py36="source ~/.virtualenvs/py36/bin/activate"
+alias py36="source ~/.anyenv/envs/pyenv/versions/py36/bin/activate"
 
 CPATH=/usr/local/cuda/include
 C_INCLUDE_PATH=/usr/local/cuda/include

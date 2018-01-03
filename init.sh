@@ -19,8 +19,13 @@ if [ -e /etc/redhat-release ]; then
     sudo cp /etc/localtime /etc/localtime.org
     sudo ln -sf /usr/share/zoneinfo/Asia/Tokyo /etc/localtime
     sudo localectl set-locale LANG=ja_JP.UTF-8
+    if [ -e ~/.clang-format.py ]; then
+        cp ~/.clang-format.py ~/.clang-format.py.bak
+    fi
+    ln -s $DOT_DIR/.clang-format.py ~/.clang-format.py
 else
-    sudo apt-get install zsh gcc g++ vim screen git gconf2
+    sudo apt-get install zsh gcc g++ clang-3.6 clang-format-3.6 \
+        vim screen git gconf2
     mkdir -p ~/git
     cd ~/git
     git clone git://github.com/sigurdga/gnome-terminal-colors-solarized.git
@@ -32,6 +37,10 @@ else
     gconftool-2 --set "/apps/gnome-terminal/profiles/Default/background_color" --type string "#00002B2B3636"
     gconftool-2 --set "/apps/gnome-terminal/profiles/Default/foreground_color" --type string "#65657B7B8383"
     curl -fL https://raw.github.com/seebi/dircolors-solarized/master/dircolors.256dark > ~/.dircolors
+    if [ -e ~/.clang-format.py ]; then
+        cp ~/.clang-format.py ~/.clang-format.py.bak
+    fi
+    ln -s /usr/share/vim/addons/syntax/clang-format-3.6.py ~/.clang-format.py
 fi
 
 git clone git://github.com/robbyrussell/oh-my-zsh.git ~/.oh-my-zsh
@@ -56,11 +65,6 @@ if [ -e ~/.gitconfig ]; then
     cp ~/.gitconfig ~/.gitconfig.bak
 fi
 ln -s $DOT_DIR/.gitconfig ~/.gitconfig
-
-if [ -e ~/.clang-format.py ]; then
-    cp ~/.clang-format.py ~/.clang-format.py.bak
-fi
-ln -s $DOT_DIR/.clang-format.py ~/.clang-format.py
 
 
 git clone https://github.com/riywo/anyenv ~/.anyenv
