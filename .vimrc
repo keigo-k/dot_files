@@ -197,7 +197,7 @@ cnoremap <C-e> <end>
 cnoremap <C-a> <home>
 cnoremap <C-w> <C-o>w
 
-noremap st :NERDTree<CR>
+noremap st :NERDTreeToggle<CR>
 noremap sf :Unite -buffer-name=file file<CR>
 noremap sr :Unite file_mru<CR>
 au FileType unite nnoremap <silent> <buffer> <expr> <C-J> unite#do_action('split')
@@ -210,8 +210,8 @@ au FileType unite inoremap <silent> <buffer> <C-b> <ESC>:q<CR>
 noremap tp :set paste<CR>:set noautoindent<CR>
 noremap tn :set nopaste<CR>:set autoindent<CR>
 noremap s <Nop>
-noremap ss :<C-u>sp<CR>
-noremap sv :<C-u>vs<CR>
+noremap si :<C-u>sp<CR>
+noremap ss :<C-u>vs<CR>
 noremap <C-h> <C-w>w
 nnoremap sj <C-w>j
 nnoremap sk <C-w>k
