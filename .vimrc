@@ -47,7 +47,6 @@ if has('lua')
         \ 'autoload' : { 'insert' : 1,}
         \ }
 endif
-NeoBundle 'scrooloose/syntastic'
 
 call neobundle#end()
 
